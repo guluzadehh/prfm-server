@@ -1,0 +1,13 @@
+{
+  "editor.formatOnSave": true,
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter",
+    "editor.tabSize": 4
+  },
+  "[javascript]": {
+    "editor.tabSize": 2
+  },
+  "editor.insertSpaces": false,
+  "editor.detectIndentation": true,
+  "python.analysis.typeCheckingMode": "basic",
+}
