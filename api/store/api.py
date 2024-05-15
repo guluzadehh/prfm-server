@@ -29,6 +29,7 @@ class OrderChoices(Enum):
     NAME_DESC = "-name"
     PRICE_PER_GRAM_ASC = "price_per_gram"
     PRICE_PER_GRAM_DESC = "-price_per_gram"
+    SALES = "-sales"
 
 
 PAGE_SIZE = 8
