@@ -78,6 +78,7 @@ class OrderItemOutSchema(Schema):
 
 
 class OrderOutSchema(Schema):
+    id: int
     items: List[OrderItemOutSchema]
     email: str
     phone: str
@@ -118,10 +119,14 @@ class OrderInSchema(Schema):
     def validate_items(cls, items, info: ValidationInfo):
         assert len(items) > 0, f"{info.field_name} can't be emtpy"
 
-        product_ids = list(map(lambda item: item.product_id, items))
-        assert len(product_ids) == len(
-            set(product_ids)
+        variants = list(
+            map(lambda item: str(item.product_id) + "_" + str(item.size), items)
+        )
+
+        assert len(variants) == len(
+            set(variants)
         ), f"{info.field_name} can't contain duplicate products"
+
         return items
 
     @field_validator("phone")

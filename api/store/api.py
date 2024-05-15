@@ -171,7 +171,9 @@ async def order_create(request: HttpRequest, order_details: OrderInSchema):
 
     product_ids = list(map(lambda item: item.product_id, order_details.items))
 
-    if await Product.objects.filter(id__in=product_ids).acount() != len(product_ids):
+    if await Product.objects.filter(id__in=product_ids).acount() != len(
+        set(product_ids)
+    ):
         return 422, None
 
     order = await Order.objects.acreate(
