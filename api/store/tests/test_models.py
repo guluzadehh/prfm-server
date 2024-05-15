@@ -25,41 +25,47 @@ class ProductModelTest(TestCase):
         expected = f"/api/products/{self.product.brand.slug}_{self.product.slug}"  # type: ignore
         self.assertEquals(self.product.get_absolute_url(), expected)  # type: ignore
 
+    # class FavoriteTest(TestCase):
+    #     def setUp(self):
+    #         self.favorite = FavoriteFactory.create()
 
-# class FavoriteTest(TestCase):
-#     def setUp(self):
-#         self.favorite = FavoriteFactory.create()
+    #     def test_favorite_absolute_url(self):
+    #         expected = f"/api/favorites/{self.favorite.id}/"
+    #         self.assertEquals(self.favorite.get_absolute_url(), expected)
 
-#     def test_favorite_absolute_url(self):
-#         expected = f"/api/favorites/{self.favorite.id}/"
-#         self.assertEquals(self.favorite.get_absolute_url(), expected)
+    # class OrderItemTest(TestCase):
+    #     def setUp(self):
+    #         self.item = OrderItemFactory()
 
-
-# class OrderItemTest(TestCase):
-#     def setUp(self):
-#         self.item = OrderItemFactory()
-
-#     def test_order_item_price(self):
-#         expected = (
-#             self.item.product.price_per_gram * self.item.size * self.item.quantity  # type: ignore
-#         )
-#         self.assertEquals(self.item.price, expected)  # type: ignore
+    #     def test_order_item_price(self):
+    #         expected = (
+    #             self.item.product.price_per_gram * self.item.size * self.item.quantity  # type: ignore
+    #         )
+    #         self.assertEquals(self.item.price, expected)  # type: ignore
 
 
-# class OrderTest(TestCase):
-#     def setUp(self):
-#         self.order = OrderFactory()
+class OrderTest(TestCase):
+    def setUp(self):
+        self.order = OrderFactory()
 
-#     def test_order_price(self):
-#         price = 0
+    def test_order_price(self):
+        price = 0
 
-#         for item in self.order.items.all():  # type: ignore
-#             price += item.price
+        for item in self.order.items.all():  # type: ignore
+            price += item.price
 
-#         expected = price
-#         self.assertEquals(self.order.price, expected)  # type: ignore
+        expected = price
+        self.assertEquals(self.order.price, expected)  # type: ignore
 
-#     def test_order_complete(self):
-#         self.order.complete()  # type: ignore
-#         expected = True
-#         self.assertTrue(self.order.completed)
+    def test_order_complete(self):
+        self.order.complete()  # type: ignore
+        self.assertTrue(self.order.completed)
+
+        def sales_incremented(order):
+            for item in order.items.select_related("product").all():
+                if item.product.sales != 1:
+                    return False
+
+            return True
+
+        self.assertTrue(sales_incremented(self.order))
