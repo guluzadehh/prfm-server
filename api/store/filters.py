@@ -13,6 +13,7 @@ class GenderEnum(Enum):
 class SeasonEnum(Enum):
     AW = "AW"
     SS = "SS"
+    ALL = "ALL"
 
 
 class ProductFilter(FilterSchema):
@@ -31,7 +32,7 @@ class ProductFilter(FilterSchema):
         return Q()
 
     def filter_season(self, season: SeasonEnum) -> Q:
-        if season is None:
+        if season is None or season == SeasonEnum.ALL:
             return Q()
 
         return Q(season=season.value)
