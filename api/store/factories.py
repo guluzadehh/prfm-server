@@ -34,6 +34,7 @@ class ProductFactory(factory.django.DjangoModelFactory):
     price_per_gram = faker.pydecimal(left_digits=2, right_digits=2, positive=True)
     gender = factory.Sequence(lambda n: Product.GENDERS[n % 3][0])
     season = factory.Sequence(lambda n: Product.SEASONS[n % 2][0])
+    sales = 0
 
     @factory.post_generation
     def groups(self, create, extracted):

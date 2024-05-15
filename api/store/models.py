@@ -58,6 +58,7 @@ class Product(models.Model):
     )
     gender = models.CharField("Cins", max_length=1, choices=GENDERS, default="U")
     season = models.CharField("Fəsil", max_length=2, choices=SEASONS)
+    sales = models.PositiveIntegerField("Satış sayı", default=0)
 
     def __str__(self):
         return f"{self.brand} {self.name}"
@@ -110,8 +111,18 @@ class Order(models.Model):
     ordered_at = models.DateTimeField("sifariş tarixi", auto_now_add=True)
 
     def complete(self):
+        if self.completed:
+            return
+
         self.completed = True
         self.save()
+
+        products = [item.product for item in self.items.select_related("product").all()]
+
+        for product in products:
+            product.sales += 1
+
+        Product.objects.bulk_update(products, ["sales"])
 
     @property
     def price(self):
