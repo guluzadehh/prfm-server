@@ -97,4 +97,4 @@ class PasswordUpdateSchema(Schema):
             password_validation.validate_password(p)
             return p
         except DjangoValidationError as e:
-            raise ValueError("".join(e.messages))
+            raise ValueError("\n".join(e.messages))
