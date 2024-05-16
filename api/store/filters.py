@@ -1,5 +1,5 @@
 from enum import Enum
-from typing import List, Optional, Union
+from typing import List
 from ninja import Field, FilterSchema
 from django.db.models import Q
 
