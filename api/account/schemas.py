@@ -6,15 +6,8 @@ from ninja.schema import Schema
 
 # from ninja.errors import ValidationError
 from pydantic import (
-    ConfigDict,
-    EmailStr,
     field_validator,
-    model_validator,
-    ValidationError,
 )
-from pydantic_core import PydanticCustomError
-
-from account.models import User
 
 
 class UserOutSchema(Schema):
