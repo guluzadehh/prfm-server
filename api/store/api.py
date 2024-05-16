@@ -69,7 +69,7 @@ async def product_list(
     }
 
 
-@router.get("/products/{brand_slug}_{product_slug}", response=DetailedProductOutSchema)
+@router.get("/products/{brand_slug}_{product_slug}", response=ProductOutSchema)
 async def product_detail(request: HttpRequest, brand_slug: str, product_slug: str):
     user = await request.auser()
 

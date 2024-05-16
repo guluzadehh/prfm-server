@@ -1,6 +1,6 @@
 from datetime import datetime
 from decimal import Decimal
-from typing import Any, Dict, List, Literal, Optional
+from typing import Dict, List, Optional
 from django.core.exceptions import ValidationError as DjangoValidationError
 from ninja import Field, Schema
 from phonenumber_field.validators import validate_international_phonenumber
@@ -40,23 +40,11 @@ class ProductOutSchema(Schema):
     favorite_id: Optional[int] = None
 
 
-class DetailedProductOutSchema(ProductOutSchema):
-    # groups: List[GroupOutSchema]
-    pass
-
-
 class ProductListOutSchema(Schema):
     data: List[ProductOutSchema]
     count: int
     next: Optional[int]
     previous: Optional[int]
-
-
-class PaginatedOutSchema(Schema):
-    items: List[Any]
-    total: int
-    next: int
-    previous: int
 
 
 class FavoriteOutSchema(Schema):
