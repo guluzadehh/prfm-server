@@ -7,8 +7,8 @@ api = NinjaAPI(csrf=True)
 
 
 @api.post("/csrftoken")
-@ensure_csrf_cookie
 @csrf_exempt
+@ensure_csrf_cookie
 def get_csrf_token(request):
     return HttpResponse()
 

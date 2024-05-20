@@ -52,6 +52,7 @@ MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.locale.LocaleMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -114,11 +115,8 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
-LANGUAGE_CODE = "en-us"
 
 TIME_ZONE = "UTC"
-
-USE_I18N = True
 
 USE_TZ = True
 
@@ -168,3 +166,17 @@ EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
 EMAIL_USE_TLS = os.environ.get("EMAIL_USE_TLS")
 EMAIL_USE_SSL = os.environ.get("EMAIL_USE_SSL")
 EMAIL_TIMEOUT = os.environ.get("EMAIL_TIMEOUT")  # in seconds
+
+
+from django.utils.translation import gettext_lazy as _
+
+LANGUAGE_CODE = "az"
+
+USE_I18N = True
+USE_L10N = True
+
+LOCALE_PATHS = [
+    BASE_DIR / "locale",
+]
+
+LANGUAGES = [("en", _("English")), ("az", _("Azerbaijani")), ("ru", _("Russian"))]

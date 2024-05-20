@@ -1,0 +1,141 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#: account/schemas.py:89
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-05-20 19:52+0400\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
+"(n%100>=11 && n%100<=14)? 2 : 3);\n"
+
+#: account/api.py:51 account/api.py:98
+msgid "Passwords must match."
+msgstr "Пароли должны совпадать."
+
+#: account/api.py:56 account/api.py:78
+msgid "The email is already taken."
+msgstr "Этот email уже занят."
+
+#: account/api.py:104
+msgid "The old password provided is incorrect."
+msgstr "Введенный старый пароль неверен."
+
+#: account/managers.py:13
+msgid "The First Name must be set"
+msgstr ""
+
+#: account/managers.py:15
+msgid "The Last Name must be set"
+msgstr ""
+
+#: account/managers.py:17
+msgid "The Email must be set"
+msgstr ""
+
+#: account/models.py:9
+msgid "email address"
+msgstr ""
+
+#: account/models.py:10
+msgid "first name"
+msgstr ""
+
+#: account/models.py:11
+msgid "last name"
+msgstr ""
+
+#: account/schemas.py:35
+#, python-format
+msgid "The first name cannot exceed %(max_length)d characters."
+msgstr "Имя не может превышать %(max_length)d символов."
+
+#: account/schemas.py:39
+#, python-format
+msgid "The first name must be at least %(min_length)d characters long."
+msgstr "Имя должно быть длиной не менее %(min_length)d символов."
+
+#: account/schemas.py:40 account/schemas.py:57
+msgid "min_length"
+msgstr ""
+
+#: account/schemas.py:51
+#, python-format
+msgid "The last name cannot exceed %(max_length)d characters."
+msgstr "Фамилия не может превышать %(max_length)d символов."
+
+#: account/schemas.py:52 account/schemas.py:68
+msgid "max_length"
+msgstr ""
+
+#: account/schemas.py:56
+#, python-format
+msgid "The last name must be at least %(min_length)d characters long."
+msgstr "Фамилия должна быть длиной не менее %(min_length)d символов."
+
+#: account/schemas.py:67
+#, python-format
+msgid "The email length cannot exceed %(max_length)d characters."
+msgstr "Длина email не может превышать %(max_length)d символов."
+
+#: account/schemas.py:103
+msgid "\n"
+msgstr ""
+
+#: api/settings.py:182
+msgid "English"
+msgstr ""
+
+#: api/settings.py:182
+msgid "Azerbaijani"
+msgstr ""
+
+#: api/settings.py:182
+msgid "Russian"
+msgstr ""
+
+#: store/schemas.py:93
+#, python-format
+msgid "Wrong %(field_name)s format"
+msgstr "Неверный формат %(field_name)s."
+
+#: store/schemas.py:93 store/schemas.py:101 store/schemas.py:124
+msgid "field_name"
+msgstr ""
+
+#: store/schemas.py:100
+#, python-format
+msgid "The %(field_name)s value must be between 1 and 10"
+msgstr "%(field_name)s должно быть от 1 до 10."
+
+#: store/schemas.py:114
+#, python-format
+msgid "%(field_name)s can't be empty"
+msgstr "%(field_name)s не может быть пустым."
+
+#: store/schemas.py:123
+#, python-format
+msgid "%(field_name)s cannot contain duplicate products"
+msgstr "%(field_name)s не может содержать повторяющиеся товары."
+
+#: store/signals.py:11
+#, python-format
+msgid "Order #%(order_id)d"
+msgstr "Заказ #%(order_id)d"
+
+#: store/signals.py:13
+#, python-format
+msgid "\\Price: %(order_price)d"
+msgstr "Цена: %(order_price)d"

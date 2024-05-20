@@ -1,6 +1,7 @@
 from typing import Dict
 from django.http import HttpRequest
 from django.contrib.auth import aauthenticate, alogin, alogout
+from django.utils.translation import gettext_lazy as _
 from ninja import Router
 from ninja.errors import AuthenticationError
 
@@ -47,12 +48,12 @@ async def user_logout(request: HttpRequest):
 @router.post("/signup/", response={201: UserOutSchema, 409: Dict, 400: Dict})
 async def user_signup(request: HttpRequest, details: SignUpSchema):
     if details.conf_password != details.password:
-        return 400, {"details": {"conf_password": "Passwords must match"}}
+        return 400, {"details": {"conf_password": _("Passwords must match")}}
 
     if await User.objects.filter(email=details.email).aexists():
         return 409, {
             "details": {
-                "email": "Email is already taken",
+                "email": _("The email is already taken."),
             }
         }
 
@@ -74,7 +75,7 @@ async def user_update(request: HttpRequest, details: UserInSchema):
     ):
         return 409, {
             "details": {
-                "email": "Email is already taken",
+                "email": _("The email is already taken."),
             }
         }
 
@@ -94,13 +95,13 @@ async def user_update(request: HttpRequest, details: UserInSchema):
 )
 async def user_password_update(request: HttpRequest, details: PasswordUpdateSchema):
     if details.conf_password != details.new_password:
-        return 400, {"details": {"conf_password": "Passwords must match"}}
+        return 400, {"details": {"conf_password": _("Passwords must match.")}}
 
     user = await request.auser()
 
     if not user.check_password(details.old_password):
         return 409, {
-            "details": {"old_password": "Wrong old password"},
+            "details": {"old_password": _("The old password provided is incorrect.")},
         }
 
     user.set_password(details.new_password)

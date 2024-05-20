@@ -5,6 +5,7 @@ from django.core.exceptions import ValidationError as DjangoValidationError
 from ninja import Field, Schema
 from phonenumber_field.validators import validate_international_phonenumber
 from pydantic import ValidationInfo, field_validator
+from django.utils.translation import gettext_lazy as _
 
 from .models import Product
 
@@ -88,12 +89,17 @@ class OrderItemInSchema(Schema):
 
     @field_validator("size")
     def validate_size(cls, v, info: ValidationInfo):
-        assert v in Product.SIZES, f"Wrong {info.field_name} format"
+        assert v in Product.SIZES, _(
+            _("Wrong %(field_name)s format") % {"field_name": info.field_name}
+        )
         return v
 
     @field_validator("quantity")
     def validate_quantity(cls, q, info: ValidationInfo):
-        assert q >= 1 and q <= 10, f"The {info.field_name} must be between 1 and 10"
+        assert q >= 1 and q <= 10, _(
+            _("The %(field_name)s value must be between 1 and 10")
+            % {"field_name": info.field_name}
+        )
         return q
 
 
@@ -105,15 +111,18 @@ class OrderInSchema(Schema):
 
     @field_validator("items")
     def validate_items(cls, items, info: ValidationInfo):
-        assert len(items) > 0, f"{info.field_name} can't be emtpy"
+        assert len(items) > 0, _("%(field_name)s can't be empty") % {
+            "field_name": info.field_name
+        }
 
         variants = list(
             map(lambda item: str(item.product_id) + "_" + str(item.size), items)
         )
 
-        assert len(variants) == len(
-            set(variants)
-        ), f"{info.field_name} can't contain duplicate products"
+        assert len(variants) == len(set(variants)), _(
+            _("%(field_name)s cannot contain duplicate products")
+            % {"field_name": info.field_name}
+        )
 
         return items
 
@@ -123,4 +132,4 @@ class OrderInSchema(Schema):
             validate_international_phonenumber(p)
             return p
         except DjangoValidationError as e:
-            raise ValueError(e.message)
+            raise ValueError(_(e.message))

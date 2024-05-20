@@ -3,8 +3,7 @@ from django.core.exceptions import ValidationError as DjangoValidationError
 import email_validator
 from ninja import Field
 from ninja.schema import Schema
-
-# from ninja.errors import ValidationError
+from django.utils.translation import gettext_lazy as _
 from pydantic import (
     field_validator,
 )
@@ -32,13 +31,14 @@ class UserInSchema(Schema):
         MAX_FIRST_NAME_LENGTH = 50
         MIN_FIRST_NAME_LENGTH = 2
 
-        assert (
-            len(fn) <= MAX_FIRST_NAME_LENGTH
-        ), f"First name must not exceed {MAX_FIRST_NAME_LENGTH} characters"
+        assert len(fn) <= MAX_FIRST_NAME_LENGTH, _(
+            "The first name cannot exceed %(max_length)d characters."
+        ) % {"max_length": MAX_FIRST_NAME_LENGTH}
 
-        assert (
-            len(fn) >= MIN_FIRST_NAME_LENGTH
-        ), f"First name should have at least {MIN_FIRST_NAME_LENGTH} characters"
+        assert len(fn) >= MIN_FIRST_NAME_LENGTH, _(
+            _("The first name must be at least %(min_length)d characters long.")
+            % {"min_length": MIN_FIRST_NAME_LENGTH}
+        )
 
         return fn
 
@@ -47,13 +47,15 @@ class UserInSchema(Schema):
         MAX_LAST_NAME_LENGTH = 50
         MIN_LAST_NAME_LENGTH = 2
 
-        assert (
-            len(ln) <= MAX_LAST_NAME_LENGTH
-        ), f"First name must not exceed {MAX_LAST_NAME_LENGTH} characters"
+        assert len(ln) <= MAX_LAST_NAME_LENGTH, _(
+            _("The last name cannot exceed %(max_length)d characters.")
+            % {"max_length": MAX_LAST_NAME_LENGTH}
+        )
 
-        assert (
-            len(ln) >= MIN_LAST_NAME_LENGTH
-        ), f"First name should have at least {MIN_LAST_NAME_LENGTH} characters"
+        assert len(ln) >= MIN_LAST_NAME_LENGTH, _(
+            _("The last name must be at least %(min_length)d characters long.")
+            % {"min_length": MIN_LAST_NAME_LENGTH}
+        )
 
         return ln
 
@@ -61,9 +63,10 @@ class UserInSchema(Schema):
     def validate_email(cls, e):
         MAX_EMAIL_LENGTH = 254
 
-        assert (
-            len(e) <= MAX_EMAIL_LENGTH
-        ), f"Email length must not exceed {MAX_EMAIL_LENGTH} characters"
+        assert len(e) <= MAX_EMAIL_LENGTH, _(
+            _("The email length cannot exceed %(max_length)d characters.")
+            % {"max_length": MAX_EMAIL_LENGTH}
+        )
 
         try:
             email_validator.validate_email(e)
@@ -83,7 +86,7 @@ class SignUpSchema(UserInSchema):
             password_validation.validate_password(p)
             return p
         except DjangoValidationError as e:
-            raise ValueError("".join(e.messages))
+            raise ValueError(_("".join(e.messages)))
 
 
 class PasswordUpdateSchema(Schema):
@@ -97,4 +100,4 @@ class PasswordUpdateSchema(Schema):
             password_validation.validate_password(p)
             return p
         except DjangoValidationError as e:
-            raise ValueError("\n".join(e.messages))
+            raise ValueError(_("\n".join(e.messages)))
