@@ -8,6 +8,7 @@ from account.helpers import adjango_auth
 from .models import Brand, Favorite, Group, Order, OrderItem, Product
 from .schemas import *
 from .filters import ProductFilter
+from .signals import order_created
 
 router = Router()
 
@@ -196,6 +197,6 @@ async def order_create(request: HttpRequest, order_details: OrderInSchema):
         )
 
     await OrderItem.objects.abulk_create(items)
-    # email
+    order_created.send(Order, order=order)  # email
 
     return 201, await Order.objects.prefetch_def(user).aget(id=order.id)
